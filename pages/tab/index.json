@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "duanping": "/components/duanping/duanping",
+    "dialog": "/components/Dialog/dialog"
+  }
+}

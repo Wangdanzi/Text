@@ -1,0 +1,63 @@
+<include src="../common/common.wxml"/>
+<import src="./common.wxml"/>
+<!--  -->
+<view class="container">数据绑定 {{text}}</view>
+<view wx:for="{{data}}">列表渲染{{item}}</view>
+<view wx:if="{{text=='Cindy'}}">条件渲染Cindy</view>
+<view wx:else>条件渲染</view>
+<template is="msgItem" data="{{...item}}"/>
+<template>
+  <view> odd </view>
+</template>
+<template>
+  <view> even </view>
+</template>
+<block wx:for="{{[1, 2, 3, 4, 5]}}">
+  <template is="{{item % 2 == 0 ? 'even' : 'odd'}}"/>
+</block>
+<!------------------------------- WXS -->
+<wxs module="m1">
+  var msg = "hello world";
+  module.exports.message = msg;
+</wxs>
+<view> {{m1.message}} </view>
+
+<!-- 下面的 getMax 函数，接受一个数组，且返回数组中最大的元素的值 -->
+<wxs module="m1">
+var getMax = function(array) {
+  var max = undefined;
+  for (var i = 0; i < array.length; ++i) {
+    max = max === undefined ?
+      array[i] :
+      (max >= array[i] ? max : array[i]);
+  }
+  return max;
+}
+
+module.exports.getMax = getMax;
+</wxs>
+
+<!-- 调用 wxs 里面的 getMax 函数，参数为 page.js 里面的 array -->
+<view> {{m1.getMax(array)}} </view>
+<!-- 关于事件 -->
+<view id="tapTest" data-hi="WeChat" bindtap="tapName"> Click me! </view>
+
+
+ <!-- <button bindtap="onTap">点击这个按钮将触发“myevent”事件</button> -->
+<view class="contant">
+  <duanping bindcindy="cindy"><view>这里是插入到组件slot中的内容</view> 
+  <view>这里是插入到组件slot中的内容</view> 
+  </duanping>
+</view>
+<view class="container">
+    <dialog id='dialog' 
+      title='我是标题' 
+      content='恭喜你，学会了小程序组件' 
+      cancelText='知道了' 
+      confirm='谢谢你'
+      bind:cancelEvent="_cancelEvent"  
+      bind:confirmEvent="_confirmEvent">
+    </dialog>
+    <button type="primary" bindtap="showDialog"> ClickMe! </button>
+
+</view>
